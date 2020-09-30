@@ -6,7 +6,7 @@ const { find, add } = require('../db');
 const cooldownPeriod = config.notification.cooldownPeriod * 1000;
 
 const cache = {
-  checkConfig: null,
+  checkConfig: undefined,
   lastFetchedAt: 0,
   ttl: 60000,
 };
@@ -72,12 +72,12 @@ async function _send(eventName, data) {
 
 async function getCheckConfig() {
   const now = Date.now();
-  if (cache.checkConfig && cache.lastFetchedAt > (now - cache.ttl)) {
+  if (cache.checkConfig !== undefined && cache.lastFetchedAt > (now - cache.ttl)) {
     return cache.checkConfig;
   }
 
-  const result = await _.first(find('config', { name: 'PRICE_THRESHOLD' }));
-  cache.checkConfig = result.data;
+  const result = _.first(await find('config', { name: 'PRICE_THRESHOLD' }));
+  cache.checkConfig = result ? result.data : null;
   cache.lastFetchedAt = now;
   return cache.checkConfig;
 }
