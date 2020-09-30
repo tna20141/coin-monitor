@@ -1,0 +1,14 @@
+{
+  "fetchInterval": 1000,
+  "db": {
+    "url": "mongodb://localhost:27017",
+    "database": "coin-monitor"
+  },
+  "notification": {
+    "mobileToken": "ExponentPushToken[IW9erpP5DiGt3azJhPzX7p]",
+    "cooldownPeriod": 86400
+  },
+  "storage": {
+    "keepPeriod": 10
+  }
+}

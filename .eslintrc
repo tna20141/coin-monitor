@@ -1,0 +1,6 @@
+{
+  "extends": "oc",
+  "rules": {
+    "no-console": 0
+  }
+}

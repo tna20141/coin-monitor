@@ -1,0 +1,22 @@
+{
+  "name": "coin-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "linked-list": "^2.1.0",
+    "lodash": "^4.17.20",
+    "mongodb": "^3.6.2",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-config-oc": "git+https://anhlq2111:m24xmcgr9r@bitbucket.org/oncustomer/eslint-config.git"
+  },
+  "scripts": {
+    "start": "pm2 start index.js --name coin-monitor --listen-timeout 10000"
+  },
+  "author": "",
+  "license": "ISC"
+}
