@@ -5,7 +5,8 @@
     "database": "coin-monitor"
   },
   "notification": {
-    "mobileToken": "ExponentPushToken[IW9erpP5DiGt3azJhPzX7p]",
+    "telegramBotToken": "1320711882:AAHzJjXmGqakO6c554jTHrQyhxxrhg0QshQ",
+    "telegramChatId": -1001409438057,
     "cooldownPeriod": 86400
   },
   "storage": {

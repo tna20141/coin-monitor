@@ -5,18 +5,17 @@ function send(message) {
   return new Promise((resolve, reject) => {
     request({
       method: 'post',
-      url: 'https://exp.host/--/api/v2/push/send',
+      url: `https://api.telegram.org/bot${config.notification.telegramBotToken}/sendMessage`,
       json: true,
       body: {
-        to: config.notification.mobileToken,
-        title: message,
-        body: '',
+        text: message,
+        chat_id: config.notification.telegramChatId,
       },
-    }, (error) => {
-      if (error) {
+    }, (error, response, body) => {
+      if (error || !body.ok) {
         return reject(error);
       }
-      return resolve();
+      return resolve(body.result);
     });
   });
 }
