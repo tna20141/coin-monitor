@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const fs = require('fs').promises;
 const config = require('../config');
 const notification = require('../notification');
 const { find, add } = require('../db');
@@ -10,17 +11,6 @@ const cache = {
   lastFetchedAt: 0,
   ttl: 60000,
 };
-
-// const checkConfig = {
-//   upper: {
-//     BTC: 10000,
-//     ETH: 300,
-//   },
-//   lower: {
-//     BTC: 15000,
-//     ETH: 300,
-//   },
-// };
 
 module.exports = handler;
 
@@ -76,7 +66,7 @@ async function getCheckConfig() {
     return cache.checkConfig;
   }
 
-  const result = _.first(await find('config', { name: 'PRICE_THRESHOLD' }));
+  const result = JSON.parse(await fs.readFile('./handlers/price-threshold.json'));
   cache.checkConfig = result ? result.data : null;
   cache.lastFetchedAt = now;
   return cache.checkConfig;
