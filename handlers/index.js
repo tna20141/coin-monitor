@@ -2,5 +2,5 @@
 
 module.exports = [
   require('./price-threshold'),
-  require('./traling-stoploss'),
+  require('./trailing-stoploss'),
 ];

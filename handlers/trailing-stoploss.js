@@ -12,7 +12,7 @@ const cache = {
 };
 
 const maxPrices = {};
-const sent = true;
+let sent = false;
 
 module.exports = handler;
 
@@ -38,6 +38,7 @@ function _check(payload, symbolConfig, symbol) {
   }
   if (maxPrices[symbol].value <= payload[symbol]) {
     maxPrices[symbol] = {
+      ...maxPrices[symbol],
       value: payload[symbol],
       updatedAt: Date.now(),
     };
@@ -70,7 +71,7 @@ async function getCheckConfig() {
   }
 
   const result = JSON.parse(await fs.readFile('./handlers/trailing-stoploss.json'));
-  cache.checkConfig = result ? result.data : null;
+  cache.checkConfig = result ? result : null;
   cache.lastFetchedAt = now;
   return cache.checkConfig;
 }
