@@ -1,0 +1,7 @@
+{
+  "BTC": {
+    "enabled": false,
+    "offset": 100,
+    "diffCoefficient": 10
+  }
+}
