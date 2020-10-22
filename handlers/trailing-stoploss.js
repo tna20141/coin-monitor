@@ -44,6 +44,7 @@ function _check(payload, symbolConfig, symbol) {
     };
   }
   const stoplossThreshold = _getStoplossThreshold(maxPrices[symbol], symbolConfig);
+	console.log(payload[symbol], stoplossThreshold, maxPrices.BTC);
   if (payload[symbol] <= stoplossThreshold) {
     _send(symbol, payload[symbol], stoplossThreshold, maxPrices[symbol]);
   }
@@ -51,7 +52,7 @@ function _check(payload, symbolConfig, symbol) {
 
 function _getStoplossThreshold(maxPrice, symbolConfig) {
   const baseDiff = maxPrice.value - maxPrice.basePrice;
-  return maxPrice.value - symbolConfig.offset - baseDiff * symbolConfig.diffCoefficient;
+  return maxPrice.value - symbolConfig.offset - (baseDiff * symbolConfig.diffCoefficient / 100);
 }
 
 async function _send(symbol, value, threshold, maxPrice) {
