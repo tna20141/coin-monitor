@@ -34,7 +34,7 @@ function _check(payload, symbolConfig, symbol) {
     return;
   }
   if (!maxPrices[symbol]) {
-    maxPrices[symbol] = { value: 0, basePrice: payload[symbol] };
+    maxPrices[symbol] = { value: 0, basePrice: symbolConfig.basePrice || payload[symbol] };
   }
   if (maxPrices[symbol].value <= payload[symbol]) {
     maxPrices[symbol] = {
