@@ -1,7 +1,11 @@
 {
-  "BTC": {
-    "enabled": true,
-    "offset": 2,
-    "diffCoefficient": 10
+  "window": 300,
+  "symbols": {
+    "BTC": {
+      "basePrice": 12000,
+      "enabled": true,
+      "offset": 200,
+      "diffCoefficient": 5
+    }
   }
 }

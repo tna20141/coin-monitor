@@ -17,18 +17,18 @@ let sent = false;
 module.exports = handler;
 
 async function handler(data) {
-  const item = _.last(data);
-  if (!item) {
-    return;
-  }
   const checkConfig = await getCheckConfig();
-  const payload = item.data;
-  _.forEach(checkConfig, (symbolConfig, symbol) => {
-    _check(payload, symbolConfig, symbol);
+  const windowSize = checkConfig.window;
+  const leftEdge = Date.now() - windowSize * 1000;
+  const trailingDataPoints = _.filter(data, dataPoint => dataPoint.timestamp > leftEdge);
+  const lastItem = _.last(data);
+  const payload = lastItem.data;
+  _.forEach(checkConfig.symbols, (symbolConfig, symbol) => {
+    _check(payload, symbolConfig, symbol, trailingDataPoints);
   });
 }
 
-function _check(payload, symbolConfig, symbol) {
+function _check(payload, symbolConfig, symbol, trailingDataPoints) {
   if (!symbolConfig.enabled) {
     maxPrices[symbol] = null;
     return;
@@ -36,7 +36,8 @@ function _check(payload, symbolConfig, symbol) {
   if (!maxPrices[symbol]) {
     maxPrices[symbol] = { value: 0, basePrice: symbolConfig.basePrice || payload[symbol] };
   }
-  if (maxPrices[symbol].value <= payload[symbol]) {
+  const meanPrice = _.meanBy(trailingDataPoints, dataPoint => dataPoint.data[symbol]) || 0;
+  if (maxPrices[symbol].value <= meanPrice) {
     maxPrices[symbol] = {
       ...maxPrices[symbol],
       value: payload[symbol],
@@ -44,7 +45,6 @@ function _check(payload, symbolConfig, symbol) {
     };
   }
   const stoplossThreshold = _getStoplossThreshold(maxPrices[symbol], symbolConfig);
-	console.log(payload[symbol], stoplossThreshold, maxPrices.BTC);
   if (payload[symbol] <= stoplossThreshold) {
     _send(symbol, payload[symbol], stoplossThreshold, maxPrices[symbol]);
   }
