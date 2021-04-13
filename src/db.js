@@ -15,7 +15,7 @@ function init() {
       }
       console.log('[INFO] connected successfully to server');
       conn = client.db(config.db.database);
-      resolve();
+      return resolve();
     });
   });
 }
@@ -26,19 +26,18 @@ function find(collection, filter) {
       if (error) {
         return reject(error);
       }
-      resolve(docs);
+      return resolve(docs);
     });
   });
 }
 
 function add(collection, items) {
-  items = _.castArray(items);
   return new Promise((resolve, reject) => {
-    conn.collection(collection).insertMany(items, (error, result) => {
+    conn.collection(collection).insertMany(_.castArray(items), (error, result) => {
       if (error) {
         return reject(error);
       }
-      resolve(result);
+      return resolve(result);
     });
   });
 }

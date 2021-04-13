@@ -1,15 +1,11 @@
 {
-  "fetchInterval": 1000,
+  "interval": 1000,
   "db": {
     "url": "mongodb://localhost:27017",
     "database": "coin-monitor"
   },
   "notification": {
     "telegramBotToken": "1320711882:AAHzJjXmGqakO6c554jTHrQyhxxrhg0QshQ",
-    "telegramChatId": -1001409438057,
-    "cooldownPeriod": 86400
-  },
-  "storage": {
-    "keepPeriod": 10
+    "telegramChatId": -1001409438057
   }
 }
