@@ -2,6 +2,7 @@
 
 const modules = [
   'nupl',
+  'heartbeat',
 ];
 
 function importMod(name) {
